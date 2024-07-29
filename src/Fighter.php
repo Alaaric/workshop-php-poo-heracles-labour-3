@@ -16,74 +16,67 @@ class Fighter
     private string $image = 'fighter.svg';
 
     private int $life = self::MAX_LIFE;
+    private int $x;
+    private int $y;
 
-    private ?Weapon $weapon = null;
-    private ?Shield $shield = null;
+    protected float $range = 1;
+
 
     public function __construct(
         string $name,
-        int $strength = 10,
-        int $dexterity = 5,
-        string $image = 'fighter.svg'
-    ) {
+        int    $strength = 10,
+        int    $dexterity = 5,
+        string $image = 'fighter.svg',
+        int $x = 0,
+        int $y = 0,
+    )
+    {
         $this->name = $name;
         $this->strength = $strength;
         $this->dexterity = $dexterity;
         $this->image = $image;
-    }
-
-    
-    public function getDamage(): int
-    {
-        $damage = $this->getStrength();
-        if($this->getWeapon() !== null) {
-            $damage += $this->getWeapon()->getDamage();
-        }
-        return $damage;
-    }
-
-    public function getDefense(): int
-    {
-        $defense = $this->getDexterity();
-        if ($this->getShield() !== null) {
-            $defense += $this->getShield()->getProtection();
-        }    
-
-        return $defense;
-    }
-
-     /**
-     * Get the value of weapon
-     */ 
-    public function getWeapon(): ?Weapon
-    {
-        return $this->weapon;
+        $this->x = $x;
+        $this->y = $y;
     }
 
     /**
-     * Set the value of weapon
-     *
-     */ 
-    public function setWeapon(Weapon $weapon): void
+     * @return float
+     */
+    public function getRange(): float
     {
-        $this->weapon = $weapon;
+        return $this->range;
     }
 
     /**
-     * Get the value of shield
-     */ 
-    public function getShield(): ?Shield
+     * @return int
+     */
+    public function getX(): int
     {
-        return $this->shield;
+        return $this->x;
     }
 
     /**
-     * Set the value of shield
-     *
-     */ 
-    public function setShield(?Shield $shield): void
+     * @param int $x
+     */
+    public function setX(int $x): void
     {
-        $this->shield = $shield;
+        $this->x = $x;
+    }
+
+    /**
+     * @return int
+     */
+    public function getY(): int
+    {
+        return $this->y;
+    }
+
+    /**
+     * @param int $y
+     */
+    public function setY(int $y): void
+    {
+        $this->y = $y;
     }
 
     /**
@@ -102,7 +95,6 @@ class Fighter
         return 'assets/images/' . $this->image;
     }
 
-
     public function fight(Fighter $adversary): void
     {
         $damage = rand(1, $this->getDamage()) - $adversary->getDefense();
@@ -110,6 +102,50 @@ class Fighter
             $damage = 0;
         }
         $adversary->setLife($adversary->getLife() - $damage);
+    }
+
+    public function getDamage(): int
+    {
+        return $this->getStrength();
+    }
+
+    /**
+     * Get the value of strength
+     */
+    public function getStrength(): int
+    {
+        return $this->strength;
+    }
+
+    /**
+     * Set the value of strength
+     *
+     */
+    public function setStrength($strength): void
+    {
+        $this->strength = $strength;
+    }
+
+    public function getDefense(): int
+    {
+        return $this->getDexterity();
+    }
+
+    /**
+     * Get the value of dexterity
+     */
+    public function getDexterity(): int
+    {
+        return $this->dexterity;
+    }
+
+    /**
+     * Set the value of dexterity
+     *
+     */
+    public function setDexterity($dexterity): void
+    {
+        $this->dexterity = $dexterity;
     }
 
     /**
@@ -135,39 +171,5 @@ class Fighter
     public function isAlive(): bool
     {
         return $this->getLife() > 0;
-    }
-
-    /**
-     * Get the value of strength
-     */
-    public function getStrength(): int
-    {
-        return $this->strength;
-    }
-
-    /**
-     * Set the value of strength
-     *
-     */
-    public function setStrength($strength): void
-    {
-        $this->strength = $strength;
-    }
-
-    /**
-     * Get the value of dexterity
-     */
-    public function getDexterity(): int
-    {
-        return $this->dexterity;
-    }
-
-    /**
-     * Set the value of dexterity
-     *
-     */
-    public function setDexterity($dexterity): void
-    {
-        $this->dexterity = $dexterity;
     }
 }

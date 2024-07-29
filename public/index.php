@@ -4,21 +4,26 @@ require '../vendor/autoload.php';
 
 /** ✅ DEBUT DE LA ZONE À MODIFIER ✅ **/
 
+use App\arena;
 use App\Shield;
 use App\Weapon;
 use App\Fighter;
+use App\Hero;
+use App\Monster;
 
-$heracles = new Fighter('Heracles', 20, 6, 'heracles.svg');
-$bird1 = new Fighter('Bird', 25, 12, 'bird.svg');
-$bird2 = new Fighter('Bird', 25, 12, 'bird.svg');
-$bird3 = new Fighter('Bird', 25, 12, 'bird.svg');
+$heracles = new Hero('Heracles', 20, 6, 'heracles.svg', 0, 0);
+$bird1 = new Monster('Bird', 25, 12, 'bird.svg', 1, 1);
+$bird2 = new Monster('Bird', 25, 12, 'bird.svg', 4, 4);
+$bird3 = new Monster('Bird', 25, 12, 'bird.svg', 9, 7);
 
-
-$sword = new Weapon();
-$heracles->setWeapon($sword);
+$bow = new Weapon(8, 'bow.svg', 5);
+$heracles->setWeapon($bow);
 
 $shield = new Shield();
 $heracles->setShield($shield);
+
+
+$arena = new Arena([$bird1, $bird2, $bird3], $heracles);
 
 
 /** FIN DE LA ZONE A MODIFIER **/
@@ -38,24 +43,24 @@ $heracles->setShield($shield);
 </head>
 
 <body>
-    <header>
-        <h1>Heracles vs Stymphalian Birds</h1>
-    </header>
-    <main>
-        <div class="fighters">
-            <a href="#hero">
-                <figure class="heracles">
-                    <img src="<?= $heracles->getImage() ?>" alt="heracles">
-                    <figcaption><?= $heracles->getName() ?></figcaption>
-                </figure>
-            </a>
-        </div>
+<header>
+    <h1>Heracles vs Stymphalian Birds</h1>
+</header>
+<main>
+    <div class="fighters">
+        <a href="#hero">
+            <figure class="heracles">
+                <img src="<?= $heracles->getImage() ?>" alt="heracles">
+                <figcaption><?= $heracles->getName() ?></figcaption>
+            </figure>
+        </a>
+    </div>
 
-        <?php include 'map.php' ?>
+    <?php include 'map.php' ?>
 
-    </main>
+</main>
 
-    <?php include 'inventory.php' ?>
+<?php include 'inventory.php' ?>
 </body>
 
 </html>
